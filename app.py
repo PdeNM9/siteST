@@ -9,7 +9,7 @@ st.title('Consulta de Arquivos')
 name_input = st.text_input("Digite uma palavra para pesquisar:")
 
 if name_input:
-    resultados = funcoes2.buscar_minutas_por_nome(funcoes2.conection, name_input)
+    resultados = funcoes.buscar_minutas_por_nome(funcoes.conection, name_input)
     if not resultados.empty:
         # Ajuste para extrair nomes das minutas de um DataFrame
         nomes_minutas = [row.Nome_da_Minuta for row in resultados.itertuples()]

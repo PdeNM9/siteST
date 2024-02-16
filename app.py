@@ -1,10 +1,7 @@
 import streamlit as st
-import funcoes
+import funcoes2
 import variaveis
 from st_copy_to_clipboard import st_copy_to_clipboard
-
-# Conectar ao banco de dados
-connection = funcoes.connect_to_database('host', 'user', 'password', 'database')
 
 st.title('Consulta de Arquivos')
 
@@ -12,11 +9,15 @@ st.title('Consulta de Arquivos')
 name_input = st.text_input("Digite uma palavra para pesquisar:")
 
 if name_input:
-    resultados = funcoes.buscar_minutas_por_nome(connection, name_input)
-    if resultados:
-        nomes_minutas = [nome for nome, _ in resultados]
+    resultados = funcoes2.buscar_minutas_por_nome(funcoes2.conection, name_input)
+    if not resultados.empty:
+        # Ajuste para extrair nomes das minutas de um DataFrame
+        nomes_minutas = [row.Nome_da_Minuta for row in resultados.itertuples()]
         escolha = st.selectbox("Escolha uma minuta:", nomes_minutas)
-        conteudo_da_minuta = next(conteudo for nome, conteudo in resultados if nome == escolha)
+
+        # Ajuste para extrair o conteúdo da minuta selecionada
+        conteudo_da_minuta = next(
+            row.Conteudo_da_Minuta for row in resultados.itertuples() if row.Nome_da_Minuta == escolha)
 
         # Identificar variáveis no conteúdo da minuta com base no dicionário de variáveis
         variaveis_encontradas = {descricao: variaveis.data[descricao] for descricao in variaveis.data if variaveis.data[descricao] in conteudo_da_minuta}
@@ -36,7 +37,6 @@ if name_input:
         if 'conteudo_modificado' in locals():
             # Corrigido para usar apenas um argumento, o conteúdo a ser copiado
             botao_de_copiar = st_copy_to_clipboard(conteudo_modificado)
-
 
     else:
         st.write("Nenhum registro encontrado.")

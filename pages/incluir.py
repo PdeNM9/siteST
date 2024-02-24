@@ -37,3 +37,4 @@ def adicionar_minuta(nome_da_minuta, campos, conteudo_da_minuta, fase, ramo, tip
 # Botão para adicionar a minuta
 if st.button('Adicionar Minuta'):
     adicionar_minuta(nome_da_minuta, campos, conteudo_da_minuta, fase, ramo, tipo, variaveis)
+

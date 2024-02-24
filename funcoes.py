@@ -24,7 +24,7 @@ def atualizar_minuta(conection, nome_da_minuta, campos, conteudo_da_minuta, fase
         # Construir o comando SQL para atualizar os dados da minuta
         comando_sql = f"""
         UPDATE minutas
-        SET Campos = '{campos}', Conteudo_da_Minuta = '{conteudo_da_minuta}', Fase = '{fase}', Ramo = '{ramo}', Tipo = '{tipo}', Variáveis = '{variaveis}'
+        SET Campos = '{campos}', Conteudo_da_minuta = '{conteudo_da_minuta}', Fase = '{fase}', Ramo = '{ramo}', Tipo = '{tipo}', Variáveis = '{variaveis}'
         WHERE Nome_da_Minuta = '{nome_da_minuta}'
         """
 

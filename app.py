@@ -1,7 +1,10 @@
 import streamlit as st
+st.set_page_config(page_title="Assessor 2.0!", page_icon="🎈", layout="centered")
+
 import funcoes
 import variaveis
 from st_copy_to_clipboard import st_copy_to_clipboard
+
 
 st.title('Consulta de Arquivos.')
 

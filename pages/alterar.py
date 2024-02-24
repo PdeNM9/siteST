@@ -29,22 +29,17 @@ if name_input:
             row.Tipo for row in resultados.itertuples() if row.Nome_da_Minuta == escolha)
         variaveis = next(
             row.Variáveis for row in resultados.itertuples() if row.Nome_da_Minuta == escolha)
-        st.write("**Conteúdo da Minuta:**")
-        st.text_area("conteudo_da_minuta", value=conteudo_da_minuta, height=600)
-        st.write("**Campos:**")
-        st.text_input("Campos", value=campos)
-        st.write("**Fase:**")
-        st.text_input("Fase", value=fase)
-        st.write("**Ramo:**")
-        st.text_input("Ramo", value=ramo)
-        st.write("**Tipo:**")
-        st.text_input("Tipo", value=tipo)
-        st.write("**Variáveis:**")
-        st.text_input("Variáveis", value=variaveis)
+
+        st.text_area("**Conteúdo da Minuta:**", value=conteudo_da_minuta, height=600)
+        st.text_input("**Campos:**", value=campos)
+        st.text_input("**Fase:**", value=fase)
+        st.text_input("**Ramo:**", value=ramo)
+        st.text_input("**Tipo:**", value=tipo)
+        st.text_input("**Variáveis:**", value=variaveis)
 
         if st.button('Atualizar Minuta'):
             # Chama a função para atualizar a minuta
-            sucesso = funcoes.atualizar_minuta(conection, escolha, campos, fase, ramo, tipo, variaveis, conteudo_da_minuta)
+            sucesso = funcoes.atualizar_minuta(conection, campos, conteudo_da_minuta, fase, ramo, tipo, variaveis,  escolha)
             if sucesso:
                 st.success("Minuta atualizada com sucesso! -alterar")
             else:

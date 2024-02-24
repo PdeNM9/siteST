@@ -17,10 +17,10 @@ if name_input:
         escolha = st.selectbox("Escolha uma minuta:", nomes_minutas)
 
         # Ajuste para extrair o conteúdo da minuta selecionada
-        conteudo_da_minuta = next(
-            row.Conteudo_da_Minuta for row in resultados.itertuples() if row.Nome_da_Minuta == escolha)
         campos = next(
             row.Campos for row in resultados.itertuples() if row.Nome_da_Minuta == escolha)
+        conteudo_da_minuta = next(
+            row.Conteudo_da_Minuta for row in resultados.itertuples() if row.Nome_da_Minuta == escolha)
         fase = next(
             row.Fase for row in resultados.itertuples() if row.Nome_da_Minuta == escolha)
         ramo = next(
@@ -30,8 +30,8 @@ if name_input:
         variaveis = next(
             row.Variáveis for row in resultados.itertuples() if row.Nome_da_Minuta == escolha)
 
-        st.text_area("**Conteúdo da Minuta:**", value=conteudo_da_minuta, height=600)
         st.text_input("**Campos:**", value=campos)
+        st.text_area("**Conteúdo da Minuta:**", value=conteudo_da_minuta, height=600)
         st.text_input("**Fase:**", value=fase)
         st.text_input("**Ramo:**", value=ramo)
         st.text_input("**Tipo:**", value=tipo)

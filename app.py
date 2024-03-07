@@ -5,8 +5,6 @@ import funcoes
 import variaveis
 from st_copy_to_clipboard import st_copy_to_clipboard
 
-
-
 st.title('Consulta de Arquivos.')
 
 # Input para buscar pelo nome da minuta

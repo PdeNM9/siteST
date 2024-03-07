@@ -1,6 +1,9 @@
+import streamlit as st
+st.set_page_config(page_title="Assessor 2.0!", page_icon="🎈", layout="centered")
 import requests
 import json
-import streamlit as st
+
+
 
 st.markdown('# Consultar Processo.')
 # Função para formatar o número do processo

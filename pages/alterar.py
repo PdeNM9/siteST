@@ -1,16 +1,17 @@
+# alterar.py
 import streamlit as st
 import funcoes
 
 st.markdown('# Alterar Minuta.')
 
 # Configurar conexão ao banco de dados
-conection = st.connection('mysql', type='sql')
+conexao = st.connection('mysql', type='sql')
 
 # Input para buscar pelo nome da minuta
 name_input = st.text_input("Digite uma palavra para pesquisar:")
 
 if name_input:
-    resultados = funcoes.buscar_minutas_por_nome(funcoes.conection, name_input)
+    resultados = funcoes.buscar_minutas_por_nome(conexao, name_input)
     if not resultados.empty:
         # Ajuste para extrair nomes das minutas de um DataFrame
         nomes_minutas = [row.Nome_da_Minuta for row in resultados.itertuples()]
@@ -30,20 +31,24 @@ if name_input:
         variaveis = next(
             row.Variáveis for row in resultados.itertuples() if row.Nome_da_Minuta == escolha)
 
-        st.text_input("**Campos:**", value=campos)
-        st.text_area("**Conteúdo da Minuta:**", value=conteudo_da_minuta, height=600)
-        st.text_input("**Fase:**", value=fase)
-        st.text_input("**Ramo:**", value=ramo)
-        st.text_input("**Tipo:**", value=tipo)
-        st.text_input("**Variáveis:**", value=variaveis)
+        campos = st.text_input("**Campos:**", value=campos)
+        conteudo_da_minuta = st.text_area("**Conteúdo da Minuta:**", value=conteudo_da_minuta, height=600)
+        fase = st.text_input("**Fase:**", value=fase)
+        ramo = st.text_input("**Ramo:**", value=ramo)
+        tipo = st.text_input("**Tipo:**", value=tipo)
+        variaveis = st.text_input("**Variáveis:**", value=variaveis)
+
+        nome_da_minuta = escolha
 
         if st.button('Atualizar Minuta'):
             # Chama a função para atualizar a minuta
-            sucesso = funcoes.atualizar_minuta(conection, campos, conteudo_da_minuta, fase, ramo, tipo, variaveis,  escolha)
+            sucesso = funcoes.atualizar_minuta(conexao, nome_da_minuta, campos, conteudo_da_minuta, fase, ramo, tipo, variaveis)
+
             if sucesso:
-                st.success("Minuta atualizada com sucesso! -alterar")
+                st.success("Minuta atualizada com sucesso! - alterar")
             else:
                 st.error("Erro ao atualizar a minuta - alterar.")
 
     else:
         st.write("Nenhum registro encontrado.")
+        

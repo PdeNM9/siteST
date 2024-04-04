@@ -1,9 +1,9 @@
+import pyperclip
 import streamlit as st
 st.set_page_config(page_title="Assessor 2.0!", page_icon="🎈", layout="centered")
 
 import funcoes
 import variaveis
-from st_copy_to_clipboard import st_copy_to_clipboard
 
 st.title('Consulta de Arquivos.')
 
@@ -36,10 +36,14 @@ if name_input:
         st.write("**Conteúdo da Minuta:**")
         st.write(conteudo_modificado)
 
-        # Após o conteúdo modificado ser definido
+       # Após o conteúdo modificado ser definido
         if 'conteudo_modificado' in locals():
-            # Corrigido para usar apenas um argumento, o conteúdo a ser copiado
-            botao_de_copiar = st_copy_to_clipboard(conteudo_modificado)
+            # Utilize o st.button para detectar quando o botão é clicado
+            if st.button("COPIAR"):
+                # Utilize pyperclip para copiar o conteúdo modificado para a área de transferência
+                pyperclip.copy(conteudo_modificado)
+                # Utilize st.success para mostrar a mensagem de sucesso
+                st.success("Copiado com sucesso!")
 
     else:
         st.write("Nenhum registro encontrado.")

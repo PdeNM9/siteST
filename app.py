@@ -35,7 +35,7 @@ if name_input:
             conteudo_modificado = conteudo_modificado.replace(identificador, valor)
 
         st.write("**Conteúdo da Minuta:**")
-        st.write(conteudo_modificado)
+        st.text_area(conteudo_modificado)
 
        # Após o conteúdo modificado ser definido
         if 'conteudo_modificado' in locals():

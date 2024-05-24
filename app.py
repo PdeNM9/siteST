@@ -6,7 +6,7 @@ import funcoes
 import variaveis
 
 # Configuração da página deve ser a primeira coisa a ser chamada
-st.set_page_config(page_title="Assessor 2.0!", page_icon="🎈", layout="centered")
+st.set_page_config(page_title="Assessor 2.0!")
 
 st.title('Consulta de Arquivos.')
 

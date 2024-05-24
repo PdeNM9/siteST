@@ -3,7 +3,7 @@ from st_copy_to_clipboard import st_copy_to_clipboard
 from annotated_text import annotated_text
 
 # Configuração da página deve ser a primeira coisa a ser chamada
-st.set_page_config(page_title="Assessor 2.0!", page_icon="🎈", layout="centered")
+st.set_page_config(page_title="Assessor 2.0!", page_icon="📣", layout="centered")
 
 import funcoes
 import variaveis
@@ -24,7 +24,7 @@ def create_annotated_text(text, annotations):
             i += 1
     return result
 
-st.title('Consulta de Arquivos.')
+st.title('Consulta de Minutas.')
 
 # Input para buscar pelo nome da minuta
 name_input = st.text_input("Digite uma palavra para pesquisar:")

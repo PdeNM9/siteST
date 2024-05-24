@@ -5,7 +5,7 @@ from annotated_text import annotated_text
 import funcoes
 import variaveis
 
-st.set_page_config(page_title="Assessor 2.0!", page_icon="📣", layout="centered")
+st.set_page_config(page_title="Assessor 2.0!", page_icon="🎈", layout="centered")
 st.title('Consulta de Arquivos.')
 
 # Input para buscar pelo nome da minuta

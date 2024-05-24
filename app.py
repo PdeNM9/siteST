@@ -63,12 +63,12 @@ if name_input:
         with col2:
             st.write("### Conteúdo Modificado:")
             st.write(conteudo_modificado)
-
-        # Após o conteúdo modificado ser definido
-        if 'conteudo_modificado' in locals():
-            # Utilize o st.button para detectar quando o botão é clicado
-            st_copy_to_clipboard(conteudo_modificado, "Copiar!", "✅!")
-            # Utilize st.success para mostrar a mensagem de sucesso
+            # Após o conteúdo modificado ser definido
+            if 'conteudo_modificado' in locals():
+                # Utilize o st.button para detectar quando o botão é clicado
+                st_copy_to_clipboard(conteudo_modificado, "Copiar!", "✅!")
+                # Utilize st.success para mostrar a mensagem de sucesso
+      
 
     else:
         st.warning("Nenhum registro encontrado para o termo pesquisado.")

@@ -8,8 +8,6 @@ st.set_page_config(page_title="Assessor 2.0!", page_icon="🎈", layout="centere
 import funcoes
 import variaveis
 
-
-
 st.title('Consulta de Arquivos.')
 
 # Input para buscar pelo nome da minuta
@@ -43,12 +41,16 @@ if name_input:
 
         with col1:
             st.write("### Conteúdo Original da Minuta:")
-            # Criação de texto anotado para exibição
-            annotated_text(*[
-                (variaveis.data[descricao], descricao) if variaveis.data[descricao] in conteudo_da_minuta
-                else variaveis.data[descricao]
-                for descricao in variaveis.data if variaveis.data[descricao] in conteudo_da_minuta
-            ])
+            # Criar uma lista com o conteúdo anotado
+            anotacoes = []
+            partes = conteudo_da_minuta.split(" ")
+            for parte in partes:
+                if parte in variaveis.data.values():
+                    descricao = next(descricao for descricao, identificador in variaveis.data.items() if identificador == parte)
+                    anotacoes.append((parte, descricao))
+                else:
+                    anotacoes.append(parte)
+            annotated_text(*anotacoes)
 
         with col2:
             st.write("### Conteúdo Modificado:")

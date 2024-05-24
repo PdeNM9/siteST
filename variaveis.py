@@ -1,6 +1,6 @@
 data = {
-    'Autor': 'A1',
-    'Réu': 'R2',
+    'Autor, Exequente, Impetrante ou Embargante': 'A1',
+    'Réu, Executado, Impetrado ou Embargado': 'R2',
     'Fatos': 'F3',
     'Pedidos': 'P4',
     'Seguro Garantia': 'S5',
@@ -45,7 +45,7 @@ data = {
     'AJG': 'GJ20',
     'ID. agravo de instrumento': 'AI21',
     'ID. decisão em agravo de instrumento': 'DAI22',
-    'preliminares': 'PRE24',
+    'Preliminares': 'PRE24',
     'ID. Embargos de desclaração': 'ED25',
     'ID. Mandado Oficial': 'MO28',
     'ID. cálculo': 'IDC29',

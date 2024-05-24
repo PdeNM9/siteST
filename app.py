@@ -59,6 +59,10 @@ if name_input:
             st.write("### Conteúdo Original da Minuta:")
             anotacoes = create_annotated_text(conteudo_da_minuta, variaveis.data)
             annotated_text(*anotacoes)
+            if 'conteudo_modificado' in locals():
+                # Utilize o st.button para detectar quando o botão é clicado
+                st_copy_to_clipboard(conteudo_da_minuta, "Copiar!", "✅!")
+                # Utilize st.success para mostrar a mensagem de sucesso
 
         with col2:
             st.write("### Conteúdo Modificado:")

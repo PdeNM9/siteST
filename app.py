@@ -43,17 +43,17 @@ if name_input:
             st.write("### Conteúdo Original da Minuta:")
             # Criação de texto anotado para exibição
             anotacoes = []
-            palavras = conteudo_da_minuta.split()
-            for palavra in palavras:
-                if palavra in variaveis.data.values():
-                    descricao = next(descricao for descricao, identificador in variaveis.data.items() if identificador == palavra)
-                    anotacoes.append((palavra, descricao))
+            partes = conteudo_da_minuta.split()
+            for parte in partes:
+                if parte in variaveis.data.values():
+                    descricao = next(descricao for descricao, identificador in variaveis.data.items() if identificador == parte)
+                    anotacoes.append((parte, descricao))
                 else:
-                    anotacoes.append(palavra)
+                    anotacoes.append(parte)
                 anotacoes.append(" ")  # Preservar os espaços
 
             # Remover o último espaço adicionado desnecessariamente
-            anotacoes.pop()
+            anotacoes = anotacoes[:-1]
 
             # Usar annotated_text com as anotações corretas
             annotated_text(*anotacoes)

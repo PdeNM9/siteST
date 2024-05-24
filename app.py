@@ -41,15 +41,21 @@ if name_input:
 
         with col1:
             st.write("### Conteúdo Original da Minuta:")
-            # Criar uma lista com o conteúdo anotado
+            # Criação de texto anotado para exibição
             anotacoes = []
-            partes = conteudo_da_minuta.split(" ")
-            for parte in partes:
-                if parte in variaveis.data.values():
-                    descricao = next(descricao for descricao, identificador in variaveis.data.items() if identificador == parte)
-                    anotacoes.append((parte, descricao))
+            palavras = conteudo_da_minuta.split()
+            for palavra in palavras:
+                if palavra in variaveis.data.values():
+                    descricao = next(descricao for descricao, identificador in variaveis.data.items() if identificador == palavra)
+                    anotacoes.append((palavra, descricao))
                 else:
-                    anotacoes.append(parte)
+                    anotacoes.append(palavra)
+                anotacoes.append(" ")  # Preservar os espaços
+
+            # Remover o último espaço adicionado desnecessariamente
+            anotacoes.pop()
+
+            # Usar annotated_text com as anotações corretas
             annotated_text(*anotacoes)
 
         with col2:

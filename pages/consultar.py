@@ -1,18 +1,19 @@
 import streamlit as st
-st.set_page_config(page_title="Assessor 2.0!", page_icon="📣", layout="centered")
 import requests
 import json
 
-
+st.set_page_config(page_title="Assessor 2.0!", page_icon="📣", layout="centered")
 
 st.markdown('# Consultar Processo.')
+
 # Função para formatar o número do processo
 def formatar_numero_processo(numero):
     return numero.replace("-", "").replace(".", "")
 
 # Função para apresentar os dados - certifique-se de que esta função está definida
 def apresentar_dados(response_data):
-    for processo in response_data['hits']['hits']:
+    if 'hits' in response_data and 'hits' in response_data['hits']:
+        processo = response_data['hits']['hits'][0]  # Pegar apenas o primeiro processo
         processo_info = processo['_source']
         st.subheader(f"Processo Número: {processo_info['numeroProcesso']}")
 
@@ -23,14 +24,18 @@ def apresentar_dados(response_data):
             st.write(f"Data de Ajuizamento: {processo_info['dataAjuizamento']}")
             st.write(f"Última Atualização: {processo_info['dataHoraUltimaAtualizacao']}")
 
-            # Apresentar movimentos processuais sem usar outro expander
+            # Ordenar movimentos processuais pela data (mais recentes primeiro)
+            movimentos_ordenados = sorted(processo_info['movimentos'], key=lambda x: x['dataHora'], reverse=True)
+
             st.write("Movimentos Processuais:")
-            for movimento in processo_info['movimentos']:
+            for movimento in movimentos_ordenados:
                 st.write(f"- {movimento['nome']} ({movimento['dataHora']})")
 
             st.write("Assuntos:")
             for assunto in processo_info['assuntos']:
                 st.write(f"- {assunto['nome']}")
+    else:
+        st.warning("Nenhum processo encontrado.")
     pass
 
 # Input do usuário para o número do processo
@@ -50,7 +55,7 @@ if numero_do_processo:
       }
     })
 
-    #Substituir <API Key> pela Chave Pública
+    # Substituir <API Key> pela Chave Pública
     headers = {
       'Authorization': 'ApiKey cDZHYzlZa0JadVREZDJCendQbXY6SkJlTzNjLV9TRENyQk1RdnFKZGRQdw==',
       'Content-Type': 'application/json'
@@ -60,7 +65,6 @@ if numero_do_processo:
 
     if response.status_code == 200:
         response_json = response.json()
-        # Chame a função aqui, dentro do bloco condicional onde response_json é definida
         apresentar_dados(response_json)
     else:
         st.error(f"Erro ao fazer a solicitação: {response.status_code}")

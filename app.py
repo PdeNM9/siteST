@@ -1,11 +1,11 @@
 import streamlit as st
-st.set_page_config(page_title="Assessor 2.0!", page_icon="🎈", layout="centered")
-
 from st_copy_to_clipboard import st_copy_to_clipboard
+from annotated_text import annotated_text
 
 import funcoes
 import variaveis
 
+st.set_page_config(page_title="Assessor 2.0!", page_icon="📣", layout="centered")
 st.title('Consulta de Arquivos.')
 
 # Input para buscar pelo nome da minuta
@@ -34,15 +34,26 @@ if name_input:
         for identificador, valor in valores_variaveis.items():
             conteudo_modificado = conteudo_modificado.replace(identificador, valor)
 
-        st.write("**Conteúdo da Minuta:**")
-        st.write(conteudo_modificado)
+        # Criando colunas para exibir os textos lado a lado
+        col1, col2 = st.columns(2)
 
-       # Após o conteúdo modificado ser definido
+        with col1:
+            st.write("### Conteúdo Original da Minuta:")
+            annotated_text(*[
+                (variaveis.data[descricao], descricao) if variaveis.data[descricao] in conteudo_da_minuta
+                else variaveis.data[descricao]
+                for descricao in variaveis.data if variaveis.data[descricao] in conteudo_da_minuta
+            ])
+
+        with col2:
+            st.write("### Conteúdo Modificado:")
+            st.write(conteudo_modificado)
+
+        # Após o conteúdo modificado ser definido
         if 'conteudo_modificado' in locals():
             # Utilize o st.button para detectar quando o botão é clicado
             st_copy_to_clipboard(conteudo_modificado, "Copiar!", "✅!")
             # Utilize st.success para mostrar a mensagem de sucesso
-
 
     else:
         st.write("Nenhum registro encontrado.")

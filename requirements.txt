@@ -4,6 +4,7 @@ pymysql==1.1.0
 st_copy_to_clipboard==0.1.6
 requests==2.31.0
 streamlit==1.32.0
+st-annotated-text==10.2.0
 
 
 

@@ -8,6 +8,22 @@ st.set_page_config(page_title="Assessor 2.0!", page_icon="🎈", layout="centere
 import funcoes
 import variaveis
 
+def create_annotated_text(text, annotations):
+    result = []
+    i = 0
+    while i < len(text):
+        match = False
+        for key, value in annotations.items():
+            if text[i:i+len(value)] == value:
+                result.append((value, key))
+                i += len(value)
+                match = True
+                break
+        if not match:
+            result.append(text[i])
+            i += 1
+    return result
+
 st.title('Consulta de Arquivos.')
 
 # Input para buscar pelo nome da minuta
@@ -41,11 +57,8 @@ if name_input:
 
         with col1:
             st.write("### Conteúdo Original da Minuta:")
-            # Melhorando a exibição do texto anotado
-            texto_com_anotacoes = conteudo_da_minuta
-            for identificador, descricao in variaveis.data.items():
-                texto_com_anotacoes = texto_com_anotacoes.replace(identificador, "(" + identificador + ", '" + descricao + "')")
-            annotated_text(texto_com_anotacoes)
+            anotacoes = create_annotated_text(conteudo_da_minuta, variaveis.data)
+            annotated_text(*anotacoes)
 
         with col2:
             st.write("### Conteúdo Modificado:")

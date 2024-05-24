@@ -31,7 +31,7 @@ name_input = st.text_input("Digite uma palavra para pesquisar:")
 
 if name_input:
     resultados = funcoes.buscar_minutas_por_nome(funcoes.conexao, name_input)
-    if not resultados.empty:
+    if resultados is not None and not resultados.empty:
         # Ajuste para extrair nomes das minutas de um DataFrame
         nomes_minutas = [row.Nome_da_Minuta for row in resultados.itertuples()]
         escolha = st.selectbox("Escolha uma minuta:", nomes_minutas)
@@ -71,4 +71,4 @@ if name_input:
             # Utilize st.success para mostrar a mensagem de sucesso
 
     else:
-        st.write("Nenhum registro encontrado.")
+        st.warning("Nenhum registro encontrado para o termo pesquisado.")

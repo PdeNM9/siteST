@@ -5,7 +5,9 @@ from annotated_text import annotated_text
 import funcoes
 import variaveis
 
+# Configuração da página deve ser a primeira coisa a ser chamada
 st.set_page_config(page_title="Assessor 2.0!", page_icon="🎈", layout="centered")
+
 st.title('Consulta de Arquivos.')
 
 # Input para buscar pelo nome da minuta
@@ -39,6 +41,7 @@ if name_input:
 
         with col1:
             st.write("### Conteúdo Original da Minuta:")
+            # Criação de texto anotado para exibição
             annotated_text(*[
                 (variaveis.data[descricao], descricao) if variaveis.data[descricao] in conteudo_da_minuta
                 else variaveis.data[descricao]

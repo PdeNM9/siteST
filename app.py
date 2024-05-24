@@ -8,6 +8,8 @@ st.set_page_config(page_title="Assessor 2.0!", page_icon="📣", layout="centere
 import funcoes
 import variaveis
 
+funcoes.sidebar()
+
 def create_annotated_text(text, annotations):
     result = []
     i = 0

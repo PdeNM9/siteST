@@ -38,3 +38,8 @@ def atualizar_minuta(conexao, nome_da_minuta, campos, conteudo_da_minuta, fase, 
     except Exception as e:
         st.error(f"Erro ao atualizar minuta: {e}")
         return False
+
+# Cria sidebar
+def sidebar():
+    st.sidebar.title('Informações')
+    st.sidebar.markdown(f"""Desenvolvido por **PdeNM9**. Contribua para o projeto pela chave PIX: pdenm9@gmail.com""")

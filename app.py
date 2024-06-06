@@ -1,6 +1,7 @@
 import streamlit as st
 from st_copy_to_clipboard import st_copy_to_clipboard
 from annotated_text import annotated_text
+import re
 
 # Configuração da página deve ser a primeira coisa a ser chamada
 st.set_page_config(page_title="Assessor 2.0!", page_icon="📣", layout="centered")
@@ -10,20 +11,19 @@ import variaveis
 
 funcoes.sidebar()
 
+@st.cache
 def create_annotated_text(text, annotations):
+    # Usando expressão regular para otimizar a criação do texto anotado
+    pattern = re.compile("|".join(re.escape(v) for v in annotations.values()))
     result = []
-    i = 0
-    while i < len(text):
-        match = False
-        for key, value in annotations.items():
-            if text[i:i+len(value)] == value:
-                result.append((value, key))
-                i += len(value)
-                match = True
-                break
-        if not match:
-            result.append(text[i])
-            i += 1
+    last_end = 0
+    for match in pattern.finditer(text):
+        if last_end < match.start():
+            result.append(text[last_end:match.start()])
+        result.append((match.group(), list(annotations.keys())[list(annotations.values()).index(match.group())]))
+        last_end = match.end()
+    if last_end < len(text):
+        result.append(text[last_end:])
     return result
 
 st.title('Consulta de Minutas.')
@@ -35,12 +35,11 @@ if name_input:
     resultados = funcoes.buscar_minutas_por_nome(funcoes.conexao, name_input)
     if resultados is not None and not resultados.empty:
         # Ajuste para extrair nomes das minutas de um DataFrame
-        nomes_minutas = [row.Nome_da_Minuta for row in resultados.itertuples()]
+        nomes_minutas = resultados['Nome_da_Minuta'].tolist()
         escolha = st.selectbox("Escolha uma minuta:", nomes_minutas, key="select_minuta")
 
         # Ajuste para extrair o conteúdo da minuta selecionada
-        conteudo_da_minuta = next(
-            row.Conteudo_da_Minuta for row in resultados.itertuples() if row.Nome_da_Minuta == escolha)
+        conteudo_da_minuta = resultados.loc[resultados['Nome_da_Minuta'] == escolha, 'Conteudo_da_Minuta'].values[0]
 
         # Identificar variáveis no conteúdo da minuta com base no dicionário de variáveis
         variaveis_encontradas = {descricao: variaveis.data[descricao]

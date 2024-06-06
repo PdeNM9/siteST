@@ -29,7 +29,7 @@ def create_annotated_text(text, annotations):
 st.title('Consulta de Minutas.')
 
 # Input para buscar pelo nome da minuta
-name_input = st.text_input("Digite uma palavra para pesquisar:")
+name_input = st.text_input("Digite uma palavra para pesquisar:", key="input_search")
 
 if name_input:
     resultados = funcoes.buscar_minutas_por_nome(funcoes.conexao, name_input)
@@ -61,12 +61,12 @@ if name_input:
             st.write("### Conteúdo Original da Minuta:")
             anotacoes = create_annotated_text(conteudo_da_minuta, variaveis.data)
             annotated_text(*anotacoes)
-            st_copy_to_clipboard(conteudo_da_minuta, "Copiar!", "✅!", key="copy_original")
+            st_copy_to_clipboard(conteudo_da_minuta, "Copiar Original", "✅ Copiado!", key="copy_original")
 
         with col2:
             st.write("### Conteúdo Modificado:")
             st.write(conteudo_modificado)
-            st_copy_to_clipboard(conteudo_modificado, "Copiar!", "✅!", key="copy_modificado")
+            st_copy_to_clipboard(conteudo_modificado, "Copiar Modificado", "✅ Copiado!", key="copy_modificado")
 
     else:
         st.warning("Nenhum registro encontrado para o termo pesquisado.")

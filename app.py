@@ -36,7 +36,7 @@ if name_input:
     if resultados is not None and not resultados.empty:
         # Ajuste para extrair nomes das minutas de um DataFrame
         nomes_minutas = [row.Nome_da_Minuta for row in resultados.itertuples()]
-        escolha = st.selectbox("Escolha uma minuta:", nomes_minutas)
+        escolha = st.selectbox("Escolha uma minuta:", nomes_minutas, key="select_minuta")
 
         # Ajuste para extrair o conteúdo da minuta selecionada
         conteudo_da_minuta = next(
@@ -46,8 +46,8 @@ if name_input:
         variaveis_encontradas = {descricao: variaveis.data[descricao]
                                  for descricao in variaveis.data if variaveis.data[descricao] in conteudo_da_minuta}
         valores_variaveis = {}
-        for descricao, identificador in variaveis_encontradas.items():
-            valores_variaveis[identificador] = st.sidebar.text_input(f"{descricao}:", key=identificador)
+        for idx, (descricao, identificador) in enumerate(variaveis_encontradas.items()):
+            valores_variaveis[identificador] = st.sidebar.text_input(f"{descricao}:", key=f"{identificador}_{idx}")
 
         # Substituir as variáveis no conteúdo da minuta pelos valores inseridos
         conteudo_modificado = conteudo_da_minuta
@@ -61,20 +61,12 @@ if name_input:
             st.write("### Conteúdo Original da Minuta:")
             anotacoes = create_annotated_text(conteudo_da_minuta, variaveis.data)
             annotated_text(*anotacoes)
-            if 'conteudo_modificado' in locals():
-                # Utilize o st.button para detectar quando o botão é clicado
-                st_copy_to_clipboard(conteudo_da_minuta, "Copiar!", "✅!")
-                # Utilize st.success para mostrar a mensagem de sucesso
+            st_copy_to_clipboard(conteudo_da_minuta, "Copiar!", "✅!", key="copy_original")
 
         with col2:
             st.write("### Conteúdo Modificado:")
             st.write(conteudo_modificado)
-            # Após o conteúdo modificado ser definido
-            if 'conteudo_modificado' in locals():
-                # Utilize o st.button para detectar quando o botão é clicado
-                st_copy_to_clipboard(conteudo_modificado, "Copiar!", "✅!")
-                # Utilize st.success para mostrar a mensagem de sucesso
-      
+            st_copy_to_clipboard(conteudo_modificado, "Copiar!", "✅!", key="copy_modificado")
 
     else:
         st.warning("Nenhum registro encontrado para o termo pesquisado.")

@@ -1,4 +1,5 @@
 import streamlit as st
+from st_copy_to_clipboard import st_copy_to_clipboard
 from annotated_text import annotated_text
 
 # Configuração da página deve ser a primeira coisa a ser chamada
@@ -60,16 +61,12 @@ if name_input:
             st.write("### Conteúdo Original da Minuta:")
             anotacoes = create_annotated_text(conteudo_da_minuta, variaveis.data)
             annotated_text(*anotacoes)
-            if st.button("Copiar Conteúdo Original", key="copy_original_button"):
-                st.session_state.clipboard = conteudo_da_minuta
-                st.success("Conteúdo Original copiado!")
+            st_copy_to_clipboard(conteudo_da_minuta, "Copiar Conteúdo Original", "✅ Conteúdo Original Copiado!")
 
         with col2:
             st.write("### Conteúdo Modificado:")
             st.write(conteudo_modificado)
-            if st.button("Copiar Conteúdo Modificado", key="copy_modificado_button"):
-                st.session_state.clipboard = conteudo_modificado
-                st.success("Conteúdo Modificado copiado!")
+            st_copy_to_clipboard(conteudo_modificado, "Copiar Conteúdo Modificado", "✅ Conteúdo Modificado Copiado!")
 
     else:
         st.warning("Nenhum registro encontrado para o termo pesquisado.")

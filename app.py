@@ -53,19 +53,24 @@ if name_input:
         for identificador, valor in valores_variaveis.items():
             conteudo_modificado = conteudo_modificado.replace(identificador, valor)
 
-        # Criando colunas para exibir os textos lado a lado
-        col1, col2 = st.columns(2)
-
-        with col1:
+        if conteudo_modificado == conteudo_da_minuta:
             st.write("### Conteúdo Original da Minuta:")
             anotacoes = create_annotated_text(conteudo_da_minuta, variaveis.data)
             annotated_text(*anotacoes)
             st_copy_to_clipboard(conteudo_da_minuta, "Copiar Conteúdo Original", "✅ Conteúdo Original Copiado!")
+        else:
+            # Criando colunas para exibir os textos lado a lado
+            col1, col2 = st.columns(2)
 
-        with col2:
-            st.write("### Conteúdo Modificado:")
-            st.write(conteudo_modificado)
-            st_copy_to_clipboard(conteudo_modificado, "Copiar Conteúdo Modificado", "✅ Conteúdo Modificado Copiado!")
+            with col1:
+                st.write("### Conteúdo Original da Minuta:")
+                anotacoes = create_annotated_text(conteudo_da_minuta, variaveis.data)
+                annotated_text(*anotacoes)
+                st_copy_to_clipboard(conteudo_da_minuta, "Copiar Conteúdo Original", "✅ Conteúdo Original Copiado!")
 
+            with col2:
+                st.write("### Conteúdo Modificado:")
+                st.write(conteudo_modificado)
+                st_copy_to_clipboard(conteudo_modificado, "Copiar Conteúdo Modificado", "✅ Conteúdo Modificado Copiado!")
     else:
         st.warning("Nenhum registro encontrado para o termo pesquisado.")

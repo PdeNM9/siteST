@@ -61,12 +61,14 @@ if name_input:
             st.write("### Conteúdo Original da Minuta:")
             anotacoes = create_annotated_text(conteudo_da_minuta, variaveis.data)
             annotated_text(*anotacoes)
-            st_copy_to_clipboard(conteudo_da_minuta, "Copiar Original", "✅ Copiado!", key="copy_original")
+            if st.button("Copiar Conteúdo Original", key="copy_original_button"):
+                st_copy_to_clipboard(conteudo_da_minuta, "Copiar Original", "✅ Copiado!", key="copy_original")
 
         with col2:
             st.write("### Conteúdo Modificado:")
             st.write(conteudo_modificado)
-            st_copy_to_clipboard(conteudo_modificado, "Copiar Modificado", "✅ Copiado!", key="copy_modificado")
+            if st.button("Copiar Conteúdo Modificado", key="copy_modificado_button"):
+                st_copy_to_clipboard(conteudo_modificado, "Copiar Modificado", "✅ Copiado!", key="copy_modificado")
 
     else:
         st.warning("Nenhum registro encontrado para o termo pesquisado.")

@@ -63,7 +63,6 @@ if name_input:
             with col1:
                 st.write("### Conteúdo Original da Minuta:")
                 anotacoes = create_annotated_text(conteudo_da_minuta, variaveis.data)
-                annotated_text(*anotacoes)
                 st_copy_to_clipboard(conteudo_da_minuta, "Copiar Conteúdo Original", "✅ Conteúdo Original Copiado!")
 
             with col2:

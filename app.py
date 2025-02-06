@@ -10,20 +10,6 @@ import variaveis
 
 funcoes.sidebar()
 
-@st.cache
-def create_annotated_text(text, annotations):
-    # Usando expressão regular para otimizar a criação do texto anotado
-    pattern = re.compile("|".join(re.escape(v) for v in annotations.values()))
-    result = []
-    last_end = 0
-    for match in pattern.finditer(text):
-        if last_end < match.start():
-            result.append(text[last_end:match.start()])
-        result.append((match.group(), list(annotations.keys())[list(annotations.values()).index(match.group())]))
-        last_end = match.end()
-    if last_end < len(text):
-        result.append(text[last_end:])
-    return result
 
 st.title('Consulta de Minutas.')
 
@@ -54,20 +40,10 @@ if name_input:
 
         if conteudo_modificado == conteudo_da_minuta:
             st.write("### Conteúdo Original da Minuta:")
-            anotacoes = create_annotated_text(conteudo_da_minuta, variaveis.data)
             st_copy_to_clipboard(conteudo_da_minuta, "Copiar Conteúdo Original", "✅ Conteúdo Original Copiado!")
         else:
-            # Criando colunas para exibir os textos lado a lado
-            col1, col2 = st.columns(2)
-
-            with col1:
-                st.write("### Conteúdo Original da Minuta:")
-                anotacoes = create_annotated_text(conteudo_da_minuta, variaveis.data)
-                st_copy_to_clipboard(conteudo_da_minuta, "Copiar Conteúdo Original", "✅ Conteúdo Original Copiado!")
-
-            with col2:
-                st.write("### Conteúdo Modificado:")
-                st.write(conteudo_modificado)
-                st_copy_to_clipboard(conteudo_modificado, "Copiar Conteúdo Modificado", "✅ Conteúdo Modificado Copiado!")
+            st.write("### Conteúdo Modificado:")
+            st.write(conteudo_modificado)
+            st_copy_to_clipboard(conteudo_modificado, "Copiar Conteúdo Modificado", "✅ Conteúdo Modificado Copiado!")
     else:
         st.warning("Nenhum registro encontrado para o termo pesquisado.")

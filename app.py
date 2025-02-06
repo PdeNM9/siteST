@@ -40,6 +40,7 @@ if name_input:
 
         if conteudo_modificado == conteudo_da_minuta:
             st.write("### Conteúdo Original da Minuta:")
+            st.write(conteudo_modificado)
             st_copy_to_clipboard(conteudo_da_minuta, "Copiar Conteúdo Original", "✅ Conteúdo Original Copiado!")
         else:
             st.write("### Conteúdo Modificado:")

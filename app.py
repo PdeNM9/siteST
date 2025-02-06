@@ -1,6 +1,5 @@
 import streamlit as st
 from st_copy_to_clipboard import st_copy_to_clipboard
-from annotated_text import annotated_text
 import re
 
 # Configuração da página deve ser a primeira coisa a ser chamada
@@ -56,7 +55,6 @@ if name_input:
         if conteudo_modificado == conteudo_da_minuta:
             st.write("### Conteúdo Original da Minuta:")
             anotacoes = create_annotated_text(conteudo_da_minuta, variaveis.data)
-            annotated_text(*anotacoes)
             st_copy_to_clipboard(conteudo_da_minuta, "Copiar Conteúdo Original", "✅ Conteúdo Original Copiado!")
         else:
             # Criando colunas para exibir os textos lado a lado

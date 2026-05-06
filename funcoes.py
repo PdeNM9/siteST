@@ -27,6 +27,19 @@ def buscar_minutas_por_nome(name_input):
         return None
 
 
+def listar_todas_minutas():
+    """Retorna todas as minutas cadastradas no banco."""
+    conn = get_connection()
+    query = "SELECT Nome_da_Minuta, Conteudo_da_Minuta, Campos, Fase, Ramo, Tipo, Variáveis FROM minutas"
+    df = pd.read_sql_query(query, conn)
+    conn.close()
+
+    if df is not None and not df.empty:
+        return df
+    else:
+        return None
+
+
 def atualizar_minuta(nome_da_minuta, campos, conteudo_da_minuta, fase, ramo, tipo, variaveis):
     """Atualiza uma minuta existente no banco."""
     try:

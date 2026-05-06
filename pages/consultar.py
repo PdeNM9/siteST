@@ -23,6 +23,13 @@ if resultados is not None and not resultados.empty:
         with st.expander(f"📄 {row['Nome_da_Minuta']}"):
             st.write("**Conteúdo:**")
             st.text_area("Conteúdo da Minuta", value=row['Conteudo_da_Minuta'], height=300, key=f"minuta_{index}")
+            
+            # Botão para apagar a minuta
+            if st.button(f"🗑️ Apagar '{row['Nome_da_Minuta']}'", key=f"delete_{index}"):
+                if funcoes.deletar_minuta(row['Nome_da_Minuta']):
+                    st.success("Minuta apagada com sucesso!")
+                    st.rerun()
+            
             st.info("Você pode copiar o conteúdo acima diretamente.")
 else:
     st.warning("Nenhuma minuta encontrada no banco de dados.")

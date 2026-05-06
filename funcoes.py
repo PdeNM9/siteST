@@ -77,6 +77,20 @@ def adicionar_minuta(nome_da_minuta, campos, conteudo_da_minuta, fase, ramo, tip
         return False
 
 
+def deletar_minuta(nome_da_minuta):
+    """Apaga uma minuta do banco pelo nome."""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM minutas WHERE Nome_da_Minuta = ?", (nome_da_minuta,))
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        st.error(f"Erro ao apagar minuta: {e}")
+        return False
+
+
 # Cria sidebar
 def sidebar():
     st.sidebar.title('Informações')
